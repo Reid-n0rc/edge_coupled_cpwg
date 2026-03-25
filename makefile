@@ -1,8 +1,8 @@
-none:
+all:
 	g++ edge_coupled_cpwg.cpp -o edge_coupled_cpwg
 
-install:
-	install -p -s edge_coupled_cpwg /usr/bin
+install: all
+	install -p -s edge_coupled_cpwg /usr/local/bin
 
 uninstall:
-	rm -f /usr/bin/edge_coupled_cpwg
+	rm -f /usr/local/bin/edge_coupled_cpwg

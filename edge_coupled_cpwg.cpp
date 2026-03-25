@@ -4,7 +4,6 @@
 // Rainee N. Simons "Coplanar waveguide Circuits, Components, and Systems", 2001, Ch. 7.4
 // Brian C. Wadell "Transmission Line Design Handbook", 1991, Ch. 4.4.3
 
-#define __STDCPP_WANT_MATH_SPEC_FUNCS__ 1
 #include <cmath>
 #include <iostream>
 
@@ -29,8 +28,16 @@ double h = 1.593;		// dielectric thickness
 double epsilon_r = 4.5;	// relative permittivity / dielectric constant
 
 
-inline double K(double arg) {			// Complete elliptic integral of the first kind
-	return std::comp_ellint_1(arg);
+inline double K(double k) {			// Complete elliptic integral of the first kind
+	double ag = 1.0;
+	double bg = sqrt(1.0 - k * k);
+	while (ag - bg > 1e-15) {
+		double a_next = (ag + bg) / 2.0;
+		double b_next = sqrt(ag * bg);
+		ag = a_next;
+		bg = b_next;
+	}
+	return pi / (2.0 * ag);
 }
 
 double K_prime(double arg) {			// Complementary modulus of K
